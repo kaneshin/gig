@@ -8,27 +8,13 @@ import (
 )
 
 const (
+	gigDir = ".gig"
+)
+
+const (
 	defURI = "https://github.com"
 	defDst = ".gig"
 )
-
-func usage() {
-	fmt.Printf(`
-Usage:
-  gig <command> [options] <repository-path>
-
-Commands:
-  install                     Install repository.
-  uninstall                   Uninstall repository.
-  list                        List installed repository.
-  upgrade                     Upgrade repository.
-
-General Options:
-  -v, --verbose               Give more output.
-  -V, --version               Show version and exit.
-`)
-	os.Exit(1)
-}
 
 var (
 	stdout = os.Stdout
@@ -51,35 +37,20 @@ func run(args []string) error {
 func main() {
 	flag.Usage = usage
 	flag.Parse()
-	if flag.NArg() < 1 {
+	if flag.NArg() == 0 {
 		usage()
 	}
 
-	switch flag.Arg(0) {
-	case "install":
-		repos := flag.Args()[1:]
-		for _, repo := range repos {
-			uri := defURI + "/" + repo + ".git"
-			dst := os.Getenv("HOME") + "/" + defDst + "/" + repo
-			if err := run([]string{"git", "clone", "--quiet", uri, dst}); err != nil {
-				fmt.Fprintln(stderr, os.Args[0], ": ", err)
+	name := flag.Arg(0)
+	for _, cmd := range commands {
+		if cmd.name() == name {
+			if err := cmd.run(flag.Args()[1:]); err != nil {
+				fmt.Fprintln(stderr, "ERROR: ", err)
 				os.Exit(1)
 			}
-			fmt.Fprintln(stdout, "Cloned into "+dst)
+			os.Exit(0)
 		}
-	case "uninstall":
-		repos := flag.Args()[1:]
-		for _, repo := range repos {
-			dst := os.Getenv("HOME") + "/" + defDst + "/" + repo
-			if err := run([]string{"rm", "-rf", dst}); err != nil {
-				fmt.Fprintln(os.Stderr, os.Args[0], ": ", err)
-			}
-		}
-	case "list":
-
-	case "upgrade":
-
-	default:
-		usage()
 	}
+	fmt.Fprintln(stderr, "ERROR: Command Not Found")
+	os.Exit(1)
 }
