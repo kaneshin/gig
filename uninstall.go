@@ -6,7 +6,7 @@ import (
 )
 
 var cmdUninstall = &command{
-	usage: "gig uninstall kaneshin/gig",
+	usage: "uninstall <respository>",
 }
 
 func init() {

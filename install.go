@@ -6,7 +6,7 @@ import (
 )
 
 var cmdInstall = &command{
-	usage: "gig install kaneshin/gig --host github ~/.gig",
+	usage: "install <repository> [options...]",
 }
 
 func init() {

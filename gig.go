@@ -11,11 +11,6 @@ const (
 	gigDir = ".gig"
 )
 
-const (
-	defURI = "https://github.com"
-	defDst = ".gig"
-)
-
 var (
 	stdout = os.Stdout
 	stderr = os.Stderr

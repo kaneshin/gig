@@ -11,7 +11,7 @@ type command struct {
 }
 
 func (c *command) name() string {
-	return strings.Fields(c.usage)[1]
+	return strings.Fields(c.usage)[0]
 }
 
 func (c *command) err() error {
