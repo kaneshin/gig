@@ -13,18 +13,19 @@ func usage() {
     gig <command> [arguments...] [options...]
 
   Commands:
-    install                     Install repository.
+    clone                       Clone repository.
     uninstall                   Uninstall repository.
     list                        List installed repository.
     upgrade                     Upgrade repository.
     version                     Show version and exit.
 
   Examples:
-    gig install kaneshin/gig --host github ~/.gig
+    gig clone kaneshin/gig --host bitbucket
 
   General Options:
     --verbose                   Give more output.
-    --host
+    -h,--host
+    -p,--protocol
 `)
 	os.Exit(1)
 }
