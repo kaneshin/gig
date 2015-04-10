@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 )
 
 var cmdUninstall = &command{
@@ -19,11 +18,11 @@ func uninstall(args []string) error {
 		return cmdUninstall.err()
 	case 1:
 		repo := args[0]
-		dir := os.Getenv("HOME") + "/" + gigDir + "/" + repo
-		if err := run([]string{"rm", "-rf", dir}); err != nil {
+		dest := gigDir(repo)
+		if _, err := run([]string{"rm", "-rf", dest}); err != nil {
 			return err
 		}
-		fmt.Fprintln(stdout, "Deleted "+dir)
+		fmt.Fprintln(stdout, "Deleted "+dest)
 	default:
 		return cmdUninstall.err()
 	}

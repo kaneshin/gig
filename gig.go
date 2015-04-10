@@ -7,26 +7,21 @@ import (
 	"os/exec"
 )
 
-const (
-	gigDir = ".gig"
-)
+var commands = []*command{
+	cmdClone,
+}
 
-var (
-	stdout = os.Stdout
-	stderr = os.Stderr
-	stdin  = os.Stdin
-)
-
-func run(args []string) error {
+func run(args []string) ([]byte, error) {
 	if len(args) == 0 {
 		usage()
 	}
 	cmd := exec.Command(args[0], args[1:]...)
-	cmd.Stdout = stdout
-	cmd.Stderr = stderr
-	cmd.Stdin = stdin
-	err := cmd.Run()
-	return err
+	return cmd.Output()
+}
+
+func perror(err interface{}) {
+	fmt.Fprintln(stderr, "ERROR: ", err)
+	os.Exit(1)
 }
 
 func main() {
@@ -40,12 +35,10 @@ func main() {
 	for _, cmd := range commands {
 		if cmd.name() == name {
 			if err := cmd.run(flag.Args()[1:]); err != nil {
-				fmt.Fprintln(stderr, "ERROR: ", err)
-				os.Exit(1)
+				perror(err)
 			}
 			os.Exit(0)
 		}
 	}
-	fmt.Fprintln(stderr, "ERROR: Command Not Found")
-	os.Exit(1)
+	perror("Unknown command " + name)
 }
