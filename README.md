@@ -3,7 +3,19 @@
 ## Usage
 
 ```
-gig install kaneshin/gig
+gig clone kaneshin/gig
+```
+
+### Over SSH
+
+```
+gig clone kaneshin/gig -p ssh
+```
+
+### Clone from BitBucket
+
+```
+gig clone kaneshin/gig -h bitbucket
 ```
 
 ## Requirements
