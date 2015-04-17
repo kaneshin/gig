@@ -14,10 +14,10 @@ func usage() {
 
   Commands:
     clone                       Clone repository.
-    uninstall                   Uninstall repository.
-    list                        List installed repository.
-    upgrade                     Upgrade repository.
-    version                     Show version and exit.
+    # uninstall                   Uninstall repository.
+    # list                        List installed repository.
+    # upgrade                     Upgrade repository.
+    # version                     Show version and exit.
 
   Examples:
     gig clone kaneshin/gig --host bitbucket
@@ -27,5 +27,5 @@ func usage() {
     -h,--host
     -p,--protocol
 `)
-	os.Exit(1)
+	os.Exit(0)
 }

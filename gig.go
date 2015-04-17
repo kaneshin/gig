@@ -19,8 +19,8 @@ func run(args []string) ([]byte, error) {
 	return cmd.Output()
 }
 
-func perror(err interface{}) {
-	fmt.Fprintln(stderr, "ERROR: ", err)
+func perror(err ...interface{}) {
+	fmt.Fprintln(stderr, "ERROR: ", err...)
 	os.Exit(1)
 }
 
@@ -32,6 +32,11 @@ func main() {
 	}
 
 	name := flag.Arg(0)
+
+	if name == "--help" || name == "-h" {
+		usage()
+	}
+
 	for _, cmd := range commands {
 		if cmd.name() == name {
 			if err := cmd.run(flag.Args()[1:]); err != nil {
@@ -40,5 +45,5 @@ func main() {
 			os.Exit(0)
 		}
 	}
-	perror("Unknown command " + name)
+	perror("Unknown command ", name)
 }
