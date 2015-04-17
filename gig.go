@@ -20,7 +20,7 @@ func run(args []string) ([]byte, error) {
 }
 
 func perror(err ...interface{}) {
-	fmt.Fprintln(stderr, "ERROR: ", err...)
+	fmt.Fprintln(stderr, "ERROR: ", err)
 	os.Exit(1)
 }
 
